@@ -1,0 +1,17 @@
+name: attend-relay
+on:
+  workflow_dispatch:
+    inputs:
+      key: {default: IvorySQL, type: choice, options: [IvorySQL, IvorySQL_2, SuperRadar, CANN, RocketMQ3, ubml, huatuo, agentUniverse-00002, Higress-00002, opentenbase, Linyaps, Open-supOS, OpenCloudOS-00001, OSS-Compass, Compass-CI-00002, openKylin0002, Agentic_OS_1, CPQCTorchkit_1, open-eBackup_1]}
+      mode: {default: real, type: choice, options: [real, synthetic]}
+      count: {default: "1"}
+      gap: {default: "90"}
+      dry: {description: 只读基线不写入, type: boolean, default: true}
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: relay
+        env: {TAIYI_TOKEN: "${{ secrets.TAIYI_TOKEN }}", KEY: "${{ inputs.key }}", MODE: "${{ inputs.mode }}", COUNT: "${{ inputs.count }}", GAP: "${{ inputs.gap }}"}
+        run: python3 relay.py
