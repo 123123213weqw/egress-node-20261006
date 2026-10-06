@@ -1,0 +1,9 @@
+name: ping
+on:
+  workflow_dispatch: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo hello
+      - run: curl -s --max-time 20 https://ipinfo.io/json | head -c 220; echo
